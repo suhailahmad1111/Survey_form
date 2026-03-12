@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personality Survey</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:white;
+padding:25px;
+border-radius:10px;
+width:340px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+input, select, textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+textarea{
+height:70px;
+}
+
+button{
+width:100%;
+padding:10px;
+background:#4CAF50;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#45a049;
+}
+
+.description{
+margin-top:15px;
+font-size:13px;
+color:#555;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Personality Survey</h2>
+
+<form id="surveyForm">
+
+<input type="text" id="name" placeholder="What is your name?" required>
+
+<input type="email" id="email" placeholder="Your Email Address" required>
+
+<label>Select Age</label>
+<select id="age" required>
+<option value="">Select Age</option>
+<option>18</option>
+<option>19</option>
+<option>20</option>
+<option>21</option>
+<option>22</option>
+<option>23</option>
+<option>24</option>
+<option>25</option>
+<option>26</option>
+<option>27</option>
+<option>28</option>
+<option>29</option>
+<option>30</option>
+</select>
+
+<input type="text" id="food" placeholder="Your Favourite Food">
+
+<input type="text" id="place" placeholder="Your Favourite Place">
+
+<label>Your Hobby</label>
+<select id="hobby">
+<option>Select Hobby</option>
+<option>Reading</option>
+<option>Sports</option>
+<option>Travel</option>
+<option>Music</option>
+<option>Gaming</option>
+</select>
+
+<label>What's your current mood?</label>
+<select id="mood">
+<option>Select Mood</option>
+<option>Happy</option>
+<option>Excited</option>
+<option>Relaxed</option>
+<option>Motivated</option>
+<option>Calm</option>
+<option>Curious</option>
+<option>Tired</option>
+<option>Sad</option>
+</select>
+
+<label>Write few lines about your life (optional)</label>
+<textarea id="life"></textarea>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<div class="description">
+This survey is created to understand your personality and preferences.
+</div>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDAY_iHxPHhxulnO4EKig_Am3A8CskqQsc",
+  authDomain: "my-form-data-1c27f.firebaseapp.com",
+  projectId: "my-form-data-1c27f",
+  storageBucket: "my-form-data-1c27f.firebasestorage.app",
+  messagingSenderId: "849582305915",
+  appId: "1:849582305915:web:c995424c7dcab8ff29e8de",
+  measurementId: "G-840Z436NLM"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+document.getElementById("surveyForm").addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+let age = document.getElementById("age").value;
+let food = document.getElementById("food").value;
+let place = document.getElementById("place").value;
+let hobby = document.getElementById("hobby").value;
+let mood = document.getElementById("mood").value;
+let life = document.getElementById("life").value;
+
+await addDoc(collection(db,"survey"),{
+name:name,
+email:email,
+age:age,
+food:food,
+place:place,
+hobby:hobby,
+mood:mood,
+life:life
+});
+
+alert("Thank you! Your response has been submitted.");
+
+});
+
+</script>
+
+</body>
+</html>
